@@ -343,6 +343,23 @@ bool ofSoundMixer::addInputFrom( ofSoundSource* source )
 	return true;
 }
 
+/// Remove an input from the mixer
+bool ofSoundMixer::removeInputFrom(ofSoundSource* source)
+{
+	mutex.lock();
+	// search the triggers and delete the one we don't want
+	for ( int i=0; i<(int)inputs.size(); i++ ) {
+		if (inputs[i]->input == source) {
+			inputs.erase(inputs.begin()+i);
+			mutex.unlock();
+			return true;
+		}
+	}
+	ofLog( OF_LOG_ERROR, "ofSoundMixer: can't remove '%s' (%x) from '%s' (%x): it was not found in the inputs",
+		  source->getName().c_str(), source, this->getName().c_str(), this );
+	mutex.unlock();
+	return false;
+}
 
 vector<ofSoundSource*> ofSoundMixer::getInputs()
 {

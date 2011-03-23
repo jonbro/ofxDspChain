@@ -186,6 +186,10 @@ public:
 	/// Add an input to this unit from the given source unit.
 	bool addInputFrom( ofSoundSource* source );
 	
+	
+	/// Remove an input from the mixer
+	bool removeInputFrom(ofSoundSource* source);
+	
 	/// render
 	void audioRequested( float* buffer, int numFrames, int numChannels );
 	
